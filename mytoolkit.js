@@ -5,28 +5,25 @@ import {SVG} from './svg.min.js';
 
 var MyToolkit = (function() {
     var draw = SVG().addTo('body').size('100%','100%');
-    var window = draw.group()
-    window.rect(400,400).stroke('pink').fill('white')
 
     var Button = function(){
         var group = draw.group()
         var outline = group.rect(103,53).fill("black").radius(5)
-        var rect = group.rect(100,50).fill('#dbdbdb').radius(2).stroke({color: 'black', width:1, linecap: 'round'})
+        var rect = group.rect(100,50).fill('lightblue').radius(2).stroke({color: 'blue', width:1, linecap: 'round'})
         var text = group.text("click me").move(23, 15.5)
         var clickEvent = null
         var stateEvent = null
         var defaultState = 'idle'
         
-
         group.mouseover(function(){
-            rect.fill({ color: '#f2f2f2'})
-            outline.fill({ color: '#696969'})
+            rect.fill({ color: '#c4f5f5'}).stroke({color: 'lightblue', width:1, linecap: 'round'})
+            outline.fill({ color: 'lightblue'})
             defaultState = "hover"
             transition()
         })
         group.mouseout(function(){
-            rect.fill({ color: '#dbdbdb'})
-            outline.fill({ color: 'black'})
+            rect.fill({ color: 'lightblue'}).stroke({color: 'blue', width:1, linecap: 'round'})
+            outline.fill({ color: 'blue'})
         })
 
         outline.mouseout(function(){
@@ -35,7 +32,8 @@ var MyToolkit = (function() {
         })
 
         group.click(function(event){
-            rect.fill({ color: '#dbdbdb'})
+            rect.fill({ color: 'lightblue'}).stroke({color: 'blue', width:1, linecap: 'round'})
+            outline.fill('blue')
             rect.move(rect.x() + 2, rect.y()+ 2)
             rect.animate().move(rect.x()-2, rect.y()-2)
             if(clickEvent != null)
@@ -59,6 +57,9 @@ var MyToolkit = (function() {
             },
             onclick: function(eventHandler){
                 clickEvent = eventHandler
+            },
+            text: function(txt){
+                text.text(txt)
             }
         }
     }
@@ -72,7 +73,6 @@ var MyToolkit = (function() {
         var clickEvent = null
         var stateEvent = null
         var defaultState = "idle"
-        //console.log(text.text('ayyy'))
 
         group.mouseover(function(){
             defaultState = "hover"
@@ -86,12 +86,12 @@ var MyToolkit = (function() {
 
         group.click(function(event){
             if (line.attr().stroke == 'white'){
-                line.stroke({color: 'black'})
-                line2.stroke({color: 'black'})
+                line.stroke({color: 'blue'})
+                line2.stroke({color: 'blue'})
                 if(clickEvent != null)
                 clickEvent(event.type + " (checked)")
                 }
-            else if (line.attr().stroke == 'black'){
+            else if (line.attr().stroke == 'blue'){
                 line.stroke({color: 'white'})
                 line2.stroke({color: 'white'})
                 if(clickEvent != null)
@@ -146,7 +146,7 @@ var MyToolkit = (function() {
             })
             for (let i = 0; i < n; i ++){
                 if ((event.y <= (group.get(i*2).attr().cy + group.get(0).attr().r)) && (event.y >= (group.get(i*2).attr().cy - group.get(0).attr().r))){
-                    group.get(i*2).fill('red')
+                    group.get(i*2).fill('blue')
                     if(clickEvent != null)
                         clickEvent(event.type + " (" + (i + 1) +  " checked)")
                 }
@@ -198,7 +198,7 @@ var MyToolkit = (function() {
         var defaultState = "idle"
 
         group.mouseover(function(){
-            caret.stroke({color: 'pink', width: 2, linecap: 'round' })
+            caret.stroke({color: 'lightblue', width: 2, linecap: 'round' })
             defaultState = "hover"
             transition()
         })
@@ -215,6 +215,7 @@ var MyToolkit = (function() {
             transition()
             defaultState = "text changed"
             transition()
+            console.log("new text: " + text.text())
           })
           SVG.on(document, 'keyup', function(e) {
             defaultState = e.type
@@ -248,13 +249,13 @@ var MyToolkit = (function() {
     var Scrollbar = function(){
         var group = draw.group()
         var rect = group.rect(30,240).fill("white").radius(5).stroke({color: 'black', width: 1})
-        var up = group.rect(28,28).fill('pink').radius(3).stroke({color:'white', width: 1}).move(1,1)
+        var up = group.rect(28,28).fill('lightblue').radius(3).stroke({color:'white', width: 1}).move(1,1)
 
-        var down = group.rect(28,28).fill('pink').radius(3).stroke({color:'white', width: 1}).move(1, rect.height() - up.height() - 1)
-        var polygonDown = group.polygon('0,0, 24,0, 12, 12, 0,0').fill('#f06').move(3, 222)
+        var down = group.rect(28,28).fill('lightblue').radius(3).stroke({color:'white', width: 1}).move(1, rect.height() - up.height() - 1)
+        var polygonDown = group.polygon('0,0, 24,0, 12, 12, 0,0').fill('blue').move(3, 222)
        
-        var polygonUp = group.polygon('0,12, 24,12, 12,0, 0,12').fill('#f06').move(3, 8)
-        var bar = group.rect(28,38).fill('gray').radius(2).move(1,30)
+        var polygonUp = group.polygon('0,12, 24,12, 12,0, 0,12').fill('blue').move(3, 8)
+        var bar = group.rect(28,38).fill('lightblue').radius(2).move(1,30)
         
         var stateEvent = null
         var defaultState = 'idle'
@@ -268,17 +269,17 @@ var MyToolkit = (function() {
             defaultState = 'idle'
             transition()
             bar.mousemove(null)
-            bar.fill('gray')
+            bar.fill('lightblue')
             
         })
         bar.mouseout(function(){
             bar.mousemove(null)
-            bar.fill('gray')
+            bar.fill('lightblue')
             defaultState = 'idle'
             transition()
         })
         bar.mousedown(function(){
-            bar.fill('pink')
+            bar.fill('blue')
             defaultState = 'pressed'
             transition()
             bar.mousemove(function(){
@@ -322,7 +323,7 @@ var MyToolkit = (function() {
         var group = draw.group()
         var rect = group.rect(244,20).fill('white').radius(2).stroke({color: 'black', width: 2, linecap: 'round'})
         var w = 0
-        var bar = group.rect(0,16).move(2,2).radius(2).fill('green')
+        var bar = group.rect(0,16).move(2,2).radius(2).fill('blue')
         var incr = 10
         var stateEvent = null
         var defaultState = "idle"
@@ -388,21 +389,45 @@ var MyToolkit = (function() {
     var Toggle = function(){
         var group = draw.group()
         var rect = group.rect(70, 28).fill('white').radius(15).stroke({color: 'blue', width: 2, linecap: 'round'}).move(1,1)
+        var on = group.text("ON").move(4, 6).fill('white')
+        var off = group.text("OFF").move(34, 6).fill('blue')
         var circle = group.circle(24).fill('black').move(3,3)
+        var clickEvent = null
+        var stateEvent = null
+        var defaultState = "idle"
+
+        group.mouseover(function(){
+            defaultState = "hover"
+            transition()
+        })
+
+        rect.mouseout(function(){
+            defaultState = "idle"
+            transition()
+        })
         
         group.click(function(event){
             if (circle.attr().fill == 'black'){
                 circle.animate().move(44 + rect.attr().x ,rect.attr().y + 2)
                 circle.fill('white')
                 rect.fill('blue')
+                if(clickEvent != null)
+                clickEvent(event.type + " (ON)")
             }
             else{
                 circle.animate().move(rect.attr().x + 2, rect.attr().y + 2)
                 circle.fill('black')
                 rect.fill('white')
+                if(clickEvent != null)
+                clickEvent(event.type + " (OFF)")
             }
 
         })
+
+        function transition(){
+            if(stateEvent != null)
+                stateEvent(defaultState)       
+        }
 
         return {
             move: function(x, y) {
@@ -410,6 +435,15 @@ var MyToolkit = (function() {
             },
             onclick: function(eventHandler){
                 clickEvent = eventHandler
+            },
+            stateChanged: function(eventHandler){
+                stateEvent = eventHandler
+            },
+            on: function(txt){//text.node.textContent
+                on.text(txt)
+            },
+            off: function(txt){//text.node.textContent
+                off.text(txt)
             }
         }
     }
