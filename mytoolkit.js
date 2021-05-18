@@ -1,11 +1,11 @@
 // File name: mytoolkit.js
 
 import {SVG} from './svg.min.js';
-//import { SVG } from '@svgdotjs/svg.js'
 
 var MyToolkit = (function() {
     var draw = SVG().addTo('body').size('100%','100%');
 
+    /** This the function to create an object Button. */
     var Button = function(){
         var group = draw.group()
         var outline = group.rect(103,53).fill("black").radius(5)
@@ -24,6 +24,8 @@ var MyToolkit = (function() {
         group.mouseout(function(){
             rect.fill({ color: 'lightblue'}).stroke({color: 'blue', width:1, linecap: 'round'})
             outline.fill({ color: 'blue'})
+            defaultState = "idle"
+            transition()
         })
 
         outline.mouseout(function(){
@@ -45,7 +47,14 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)       
         }
 
+        
+        /** functions to call on object Button */
         return {
+            /** 
+             * Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
                 rect.move(x, y);
@@ -58,12 +67,17 @@ var MyToolkit = (function() {
             onclick: function(eventHandler){
                 clickEvent = eventHandler
             },
+            /** 
+             * Custom Label Property to set the text on the button.
+             * @param {txt} - the text label on the button
+             */
             text: function(txt){
                 text.text(txt)
             }
         }
     }
 
+    /** This the function to create an object Checkbox. */
     var Checkbox = function(){
         var group = draw.group()
         var rect = group.rect(28,28).fill("white").radius(5).stroke({color: 'black', width: 1})
@@ -104,7 +118,13 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)       
         }
 
+        /** functions to call on object Checkbox */
         return {
+            /** 
+             * Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
             },
@@ -114,7 +134,11 @@ var MyToolkit = (function() {
             onclick: function(eventHandler){
                 clickEvent = eventHandler
             },
-            text: function(txt){//text.node.textContent
+            /**
+             * Custom label property to set the text that appears to the right of the check box.
+             * @param {txt} - the text label to the right of the check box
+             */
+            text: function(txt){
                 text.text(txt)
             }
                 
@@ -122,6 +146,7 @@ var MyToolkit = (function() {
         }
     }
 
+    /** This the function to create an object RadioButton. */
     var RadioButton = function(num){
         var group = draw.group()
         var n = 2
@@ -167,7 +192,13 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)  
         }
 
+        /** functions to call on object Radiobutton */
         return {
+            /** 
+             * Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
             },
@@ -177,7 +208,11 @@ var MyToolkit = (function() {
             onclick: function(eventHandler){
                 clickEvent = eventHandler
             },
-            text: function(txt){//text.node.textContent
+            /**
+             * Custom label property to set the text that appears to the right of each button. (All labels will be automatically numbered)
+             * @param {txt} - the text label to the right of the check box
+             */
+            text: function(txt){
                 group.each(function(i, children){
                     if (this.type == "text"){
                         this.text(txt + (i+ 1)/2)
@@ -187,6 +222,7 @@ var MyToolkit = (function() {
         }
     }
 
+    /** This the function to create an object Textbox. */
     var Textbox = function(){
         var group = draw.group()
         var rect = group.rect(240,30).fill("white").radius(5).stroke({color: 'gray', width: 1})
@@ -229,7 +265,13 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)       
         }
 
+        /** functions to call on object Textbox */
         return {
+            /** 
+             * Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
             },
@@ -239,13 +281,17 @@ var MyToolkit = (function() {
             onclick: function(eventHandler){
                 clickEvent = eventHandler
             },
+            /**
+             * custom property to get the text entered by the user.
+             * @return {text} - the text value entered by the user
+             */
             text: function(){
                 return text.text()
-                
             }
         }
     }
 
+    /** This the function to create an object Scrollbar. */
     var Scrollbar = function(){
         var group = draw.group()
         var rect = group.rect(30,240).fill("white").radius(5).stroke({color: 'black', width: 1})
@@ -301,24 +347,38 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)       
         }
 
+        /** functions to call on object Scrollbar */
         return {
+            /** Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
             },
             stateChanged: function(eventHandler){
                 stateEvent = eventHandler
             },
-            pos: function(){
-                return bar.cy()
-            },
+            /**
+             * custom property to set the height of the scroll bar.
+             * @param {height} - the height of the scroll bar 
+             */
             height:function(h){
                 rect.height(h)
                 down.move(rect.x() + 1, (rect.y() + rect.height()) - up.height() - 1)
                 polygonDown.move(rect.x() + 3, (rect.y() + rect.height() - 18))
-            }
+            },
+            /**
+             * custom property to get the position of the scroll thumb.
+             * @return {number} - the center y value of the scroll thumb
+             */
+             pos: function(){
+                return bar.cy()
+            },
         }
     }
 
+    /** This the function to create an object Progressbar. */
     var Progressbar = function(){
         var group = draw.group()
         var rect = group.rect(244,20).fill('white').radius(2).stroke({color: 'black', width: 2, linecap: 'round'})
@@ -364,28 +424,50 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)       
         }
         
+        /** functions to call on object Progressbar */
         return {
+            /** 
+             * Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
             },
             stateChanged: function(eventHandler){
                 stateEvent = eventHandler
             },
+            /**
+             * custom property to set the width of the progress bar.
+             * @param {width} - the width value of the progress bar 
+             */
             width: function(width){
                 rect.attr({width: width})
             },
+            /**
+             * custom property to set the increment value of the progress bar.
+             * @param {inc}  - the increment value of the progress bar
+             */
             set: function(inc){
                 incr = inc
             },
+            /**
+             * custom property to get the increment value of the progress bar.
+             * @returns {number} - the increment value of the progress bar
+             */
             get: function(){
                 return incr
             },
+            /** custom method to increment the value of the progress bar. The method should support an arbitrary numerical value from 0-100.
+             * @return {null} - Starts the process of animating the progress bar based on the given increment value
+            */
             animate: function(){
                 animate()
             }
         }
     }
 
+    /** This the function to create an object Toggle. */
     var Toggle = function(){
         var group = draw.group()
         var rect = group.rect(70, 28).fill('white').radius(15).stroke({color: 'blue', width: 2, linecap: 'round'}).move(1,1)
@@ -429,7 +511,12 @@ var MyToolkit = (function() {
                 stateEvent(defaultState)       
         }
 
+        /** functions to call on object Toggle */
         return {
+            /** Moves the object
+             * @param {x} x - the x value
+             * @param {y} y - the y value
+             */
             move: function(x, y) {
                 group.move(x,y)
             },
@@ -439,10 +526,18 @@ var MyToolkit = (function() {
             stateChanged: function(eventHandler){
                 stateEvent = eventHandler
             },
-            on: function(txt){//text.node.textContent
+            /**
+             *custom property to set the text of the "on" toggle
+             * @param {text} - the text value of the "on" toggle
+             */
+            on: function(txt){
                 on.text(txt)
             },
-            off: function(txt){//text.node.textContent
+            /**
+             *custom property to set the text of the "off" toggle
+             * @param {text} - the text value of the "off" toggle
+             */
+            off: function(txt){
                 off.text(txt)
             }
         }

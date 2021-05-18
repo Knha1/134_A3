@@ -28,7 +28,7 @@ btn.onclick(function(e){
 	console.log(e.type);
 });
 //Custom Label Property to set the text on the button.
-//btn.text('Button Text')
+btn.text('Button Text')
 
 
 check.stateChanged(function(e){
@@ -38,7 +38,7 @@ check.onclick(function(e){
 	console.log(e);
 });
 //Custom label property to set the text that appears to the right of the check box.
-// check.text("CheckBox Text")
+check.text("CheckBox Text")
 
 radio.stateChanged(function(e){
 	console.log(e)
@@ -53,16 +53,16 @@ txt.stateChanged(function(e){
 	console.log(e)
 })
 //custom property to get the text entered by the user.
-//console.log(txt.text())
+console.log(txt.text())
 
 
 scroll.stateChanged(function(e){
 	console.log(e)
 })
 //custom property to set the height of the scroll bar.
-// scroll.height(180)
+scroll.height(180)
 //custom property to get the position of the scroll thumb.
-// console.log(scroll.pos())
+console.log(scroll.pos())
 
 prog.stateChanged(function(e){
 	console.log(e)
@@ -84,9 +84,9 @@ tog.onclick(function(e){
 	console.log(e);
 });
 //custom property to set the text of the "on" toggle
-// tog.on('light')
+tog.on('light')
 //custom property to set the text of the "off" toggle
-// tog.off('dark')
+tog.off('dark')
 
 
 
